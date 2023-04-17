@@ -1,0 +1,56 @@
+.main{
+    width: 100%;
+    height: 100vh;
+    margin-top: 20px;
+}
+.main>div{
+    height: 100vh;
+    height: 94vh;
+    width: 350px;
+    padding: 15px;
+    background-color: black;
+    margin: auto;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+}
+.output{
+    font-size: x-large;
+    padding-top: 10px;
+    color: white;
+    margin: auto;
+
+}
+.imputtag{
+    background-color: transparent;
+    width: 350px;
+    font-size: 50px;
+    color: white;
+    display: flex;
+    justify-content: end;
+}
+.secondmaindiv{
+    display: grid;
+}
+.buttons{
+
+   display: grid;
+   height: 55vh;
+   grid-template-columns: repeat(4,1fr);
+   gap: 25px;
+}
+.buttons>div{
+    color: white;
+    font-size: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: gray;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}

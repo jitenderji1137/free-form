@@ -20,18 +20,10 @@ export default function MyForm() {
         dataval(formdata);
         formRef.current.reset();
     }
-    const upload = (e)=>{
-      e.preventDefault();
-    const URL = e.target.UPL.value;
-    console.log(URL);  
-    }
     return (
       <>
       <Center><Heading color="red" m="50px">Free NetFlix</Heading></Center>
         <div style={{maxWidth:"500px",margin:"auto"}}>
-          <form onSubmit={upload}>
-          <Input name="UPL" style={{maxWidth:"500px",margin:"auto",color:"green",fontSize:"20px",padding: "20px"}} placeholder="Add URL To upload videos ..." />
-          </form>
       <form name="submit-to-google-sheet" onSubmit={handleSubmit} className="Form" ref={formRef}>
         <Textarea name="Title" type="text" placeholder="Title of Video ..." required m="10px" />
         <Input name="Image" type="text" placeholder="Image of Video ..." m="10px"  required />

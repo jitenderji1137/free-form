@@ -5,17 +5,11 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import axios from 'axios';
 export default function MyForm() {
   const formRef = useRef(null);
-  const [id,itsid] = useState("");
   const [data,dataval] = useState("");
-  useEffect(()=>{
-    axios.get("https://jitenderji1137.github.io/Netflix/db.json").then((res)=>{
-      itsid(res.data.NetFlixAPI.length+1);
-    })
-  },[])
     const handleSubmit = (e) => {
       e.preventDefault();
       const form = e.target;
-      const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}","id":${form.id.value} },`
+      const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
         dataval(formdata);
           formRef.current.reset();
     }
@@ -24,7 +18,6 @@ export default function MyForm() {
       <Center><Heading color="red" m="50px">Free NetFlix and ID id <span>{id}</span></Heading></Center>
         <div style={{maxWidth:"500px",margin:"auto"}}>
       <form name="submit-to-google-sheet" onSubmit={handleSubmit} className="Form" ref={formRef}>
-        <Input name="id" type="number" value={id} m="10px"  required />
         <Textarea name="Title" type="text" placeholder="Title of Video ..." required m="10px" />
         <Input name="Image" type="text" placeholder="Image of Video ..." m="10px"  required />
         <Textarea name="FileID" type="text" placeholder="File ID..." m="10px"  required />

@@ -15,7 +15,7 @@ export default function MyForm() {
     }
     return (
       <>
-      <Center><Heading color="red" m="50px">Free NetFlix and ID id <span>{id}</span></Heading></Center>
+      <Center><Heading color="red" m="50px">Free NetFlix</Heading></Center>
         <div style={{maxWidth:"500px",margin:"auto"}}>
       <form name="submit-to-google-sheet" onSubmit={handleSubmit} className="Form" ref={formRef}>
         <Textarea name="Title" type="text" placeholder="Title of Video ..." required m="10px" />

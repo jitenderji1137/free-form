@@ -48,12 +48,13 @@ export default function MyForm() {
           <option value='WorldPrime'>WorldPrime</option>
         </Select>
         <Select name="Plateform" m="10px"  placeholder='Select Plateform ...' required>
+          <option value='filemoon'>filemoon</option>
           <option value='Doodstream'>Doodstream</option>
           <option value='Youtube'>Youtube</option>
           <option value='vTube'>vTube</option>
           <option value='DailyMotion'>DailyMotion</option>
           <option value='streamtape'>streamtape</option>
-          <option value='filemoon'>filemoon</option>
+          <option value='filelions'>filelions</option>
         </Select>
         <ButtonGroup style={{display:"flex",justifyContent:"space-between"}}>
            <Link href = "https://netflix-api-for-project.onrender.com/" isExternal><Button>Check</Button></Link>

@@ -6,12 +6,13 @@ import axios from 'axios';
 export default function MyForm() {
   const formRef = useRef(null);
   const [data,dataval] = useState("");
+  const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
     const handleSubmit = (e) => {
       e.preventDefault();
       const form = e.target;
       const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
       const jsonData = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
-      axios.post("https://ill-pink-crow-tutu.cyclic.app/Add-Movie", jsonData)
+      axios.post(BaseURL, jsonData)
       .then(response => {
         alert("POST request successful!", response.data);
       })
@@ -65,7 +66,7 @@ export default function MyForm() {
           <option value='filelions'>filelions</option>
         </Select>
         <ButtonGroup style={{display:"flex",justifyContent:"space-between"}}>
-           <Link href = "https://netflix-api-for-project.onrender.com/" isExternal><Button>Check</Button></Link>
+           <Link href = `${BaseURL}` isExternal><Button>Check</Button></Link>
            <Button type="submit">Add to Site ... </Button>
         </ButtonGroup>
       </form>

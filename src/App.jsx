@@ -10,7 +10,15 @@ export default function MyForm() {
       e.preventDefault();
       const form = e.target;
       const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
-        dataval(formdata);
+      const jsonData = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
+      axios.post("https://ill-pink-crow-tutu.cyclic.app/Add-Movie", jsonData)
+      .then(response => {
+        alert("POST request successful!", response.data);
+      })
+      .catch(error => {
+        console.error("Error occurred during POST request:", error);
+      });
+      dataval(formdata);
           formRef.current.reset();
     }
     return (

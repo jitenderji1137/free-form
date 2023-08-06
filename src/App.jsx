@@ -66,7 +66,7 @@ export default function MyForm() {
           <option value='filelions'>filelions</option>
         </Select>
         <ButtonGroup style={{display:"flex",justifyContent:"space-between"}}>
-           <Link href = `${BaseURL}` isExternal><Button>Check</Button></Link>
+           <Link href = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie" isExternal><Button>Check</Button></Link>
            <Button type="submit">Add to Site ... </Button>
         </ButtonGroup>
       </form>

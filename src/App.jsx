@@ -3,22 +3,41 @@ import { useRef } from "react"
 import { useState , useEffect } from "react";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import axios from 'axios';
+import { createClient } from "@supabase/supabase-js";
 export default function MyForm() {
   const formRef = useRef(null);
   const [data,dataval] = useState("");
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
-    const handleSubmit = (e) => {
+  const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
+  const supabase = createClient(supabaseUrl, supabaseKey)
+    const handleSubmit = async (e) => {
       e.preventDefault();
       const form = e.target;
       const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
       const jsonData = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
-      axios.post(BaseURL, jsonData)
+      await axios.post(BaseURL, jsonData)
       .then(response => {
         alert("POST request successful!", response.data);
       })
       .catch(error => {
         console.error("Error occurred during POST request:", error);
       });
+      let { data } = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)
+      const count =  data[0].ID+1;
+     await supabase
+            .from('Free-Netflix-Darabase')
+            .insert([
+                {
+                    "FileID": form.FileID.value,
+                    "Title": form.Title.value,
+                    "Image": form.Image.value,
+                    "Plateform": form.Plateform.value,
+                    "Geans": form.Geans.value,
+                    "MainCategory": form.MainCategory.value,
+                    "ID":count
+                },
+            ])
       dataval(formdata);
           formRef.current.reset();
     }

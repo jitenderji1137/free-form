@@ -6,11 +6,34 @@ import axios from 'axios';
 import { createClient } from "@supabase/supabase-js";
 export default function MyForm() {
   const formRef = useRef(null);
+  const [arrr,arrrvalue] = useState([]);
+  const [next,nextid] = useState("");
+  const [nextresulr,nextresultvalue] = useState(false)
   const [data,dataval] = useState("");
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
   const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
   const supabase = createClient(supabaseUrl, supabaseKey)
+  function getdata(){
+      if(nextresulr){
+          return;
+      }
+      axios.get(`https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAr99xC5BUl1tpQX9LcM6ZcmOGLzFj-WdE&part=snippet&chart=mostPopular&maxResults=50&regionCode=IN${next}`)
+      .then((data)=>{
+          const dddaaatttaaa = data.data.items;
+          nextid(`&pageToken=${data.data.nextPageToken}`);
+          if(data.data.nextPageToken === undefined){
+              nextresultvalue(true)
+          }
+          let arr = [];
+          dddaaatttaaa.map((item)=>{
+            if(item.snippet.thumbnails&&item.snippet.thumbnails.maxres&&item.snippet.thumbnails.maxres.url){
+              arr.push(item);
+            }
+          })
+          arrrvalue([...arrr,...arr]);
+      })
+  }
     const handleSubmit = async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -40,6 +63,18 @@ export default function MyForm() {
             ])
       dataval(formdata);
           formRef.current.reset();
+    }
+    const AddSongstosite = async(data)=>{
+      await supabase
+            .from('Free-Netflix-Songs')
+            .insert([
+                {
+                    "fileid": data.id,
+                    "title": data.snippet.title,
+                    "image": data.snippet.thumbnails.maxres.url
+                },
+            ])
+      alert("added ....")
     }
     return (
       <>
@@ -94,6 +129,17 @@ export default function MyForm() {
       <CopyToClipboard text={data}>
         <Button color="red" border="1px solid red" m="-50px 0px 200px 80px">Copy to clipboard</Button>
       </CopyToClipboard>
+      {arrr.length === 0?<></>:<>
+      <div style={{display:"grid", gap:"5px",gridTemplateColumns:"repeat(5, minmax(0, 1fr))"}}>
+      {arrr.map((item)=>{
+        return <div key={item.id} style={{border:"1px solid red",margin:"10px",borderRadius:"5px"}}>
+          <img src={item.snippet.thumbnails.maxres.url} alt="" />
+          <Button onClick={()=>{AddSongstosite(item)}}>Add To Site</Button>
+        </div>
+      })}
+      </div>
+      </>}
+       <Button onClick={()=>{getdata()}}>Load Data To Add</Button>
       </>
     );
   }

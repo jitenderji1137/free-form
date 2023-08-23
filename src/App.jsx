@@ -84,7 +84,7 @@ export default function MyForm() {
         "Title": data.snippet.title,
         "Image": data.snippet.thumbnails.maxres.url,
         "Plateform": "Youtube",
-        "Geans": "Drama",
+        "Geans": "Songs",
         "MainCategory": "Songs",
         "ID":count
       }

@@ -10,6 +10,8 @@ export default function MyForm() {
   const [next,nextid] = useState("");
   const [nextresulr,nextresultvalue] = useState(false)
   const [data,dataval] = useState("");
+  const [tv,tvvalue] = useState([])
+  const [movies,moviesvalue] = useState([])
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
   const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
@@ -34,6 +36,16 @@ export default function MyForm() {
           arrrvalue([...arrr,...arr]);
       })
   }
+    function loadmoviesdata(){
+      axios.get("https://vidsrc.to/vapi/movie/new/1").then((data)=>{
+        console.log(data.result.items);
+      })
+    }
+    function loadtvdata(){
+      axios.get("https://vidsrc.to/vapi/tv/new/1").then((data)=>{
+        console.log(data.result.items);
+      })
+    }
     const handleSubmit = async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -134,6 +146,10 @@ export default function MyForm() {
       <CopyToClipboard text={data}>
         <Button color="red" border="1px solid red" m="-50px 0px 200px 80px">Copy to clipboard</Button>
       </CopyToClipboard>
+      <div>
+        <Button onClick={()=>{loadmoviesdata()}} color="red" border="1px solid red" m="-50px 0px 200px 80px">Add Movies</Button>
+        <Button onClick={()=>{loadtvdata()}} color="red" border="1px solid red" m="-50px 0px 200px 80px">Add TV Shows</Button>
+      </div>
       {arrr.length === 0?<></>:<>
       <div style={{display:"grid", gap:"5px",gridTemplateColumns:"repeat(5, minmax(0, 1fr))"}}>
       {arrr.map((item)=>{

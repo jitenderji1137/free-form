@@ -10,8 +10,9 @@ export default function MyForm() {
   const [next,nextid] = useState("");
   const [nextresulr,nextresultvalue] = useState(false)
   const [data,dataval] = useState("");
+  const [image,imageurl] = useState("")
+  const [geans,geansvalue] = useState("")
   const [tv,tvvalue] = useState([])
-  const [movies,moviesvalue] = useState([])
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
   const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
@@ -38,12 +39,12 @@ export default function MyForm() {
   }
     function loadmoviesdata(){
       axios.get("https://vidsrc.to/vapi/movie/new/1").then((data)=>{
-        console.log(data.result.items);
+        tvvalue(data.data.result.items);
       })
     }
     function loadtvdata(){
       axios.get("https://vidsrc.to/vapi/tv/new/1").then((data)=>{
-        console.log(data.result.items);
+        tvvalue(data.data.result.items);
       })
     }
     const handleSubmit = async (e) => {
@@ -91,6 +92,23 @@ export default function MyForm() {
       await supabase
             .from('Free-Netflix-Darabase')
             .insert([objdata])
+      alert("added ....")
+    }
+    const addvisstream = async(tit,img,id,main,gein,pla)=>{
+      let da = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)
+      const count =  da.data[0].ID+1;
+      const objdata = {
+        "FileID": id,
+        "Title": tit,
+        "Image": img,
+        "Plateform": pla,
+        "Geans": gein,
+        "MainCategory": main,
+        "ID":count
+      }
+      await supabase.from('Free-Netflix-Darabase').insert([objdata])
+      imageurl("")
+      geansvalue("")
       alert("added ....")
     }
     return (
@@ -149,6 +167,55 @@ export default function MyForm() {
       <div>
         <Button onClick={()=>{loadmoviesdata()}} color="red" border="1px solid red" m="-50px 0px 200px 80px">Add Movies</Button>
         <Button onClick={()=>{loadtvdata()}} color="red" border="1px solid red" m="-50px 0px 200px 80px">Add TV Shows</Button>
+        {tv.length!==0?<>
+        <table style={{width:"100%",textAlign:"center"}}>
+          <thead>
+          <tr>
+            <td>ID</td>
+            <td>Title</td>
+            <td>Platform</td>
+            <td>MainCateogry</td>
+            <td>Geans</td>
+            <td>Image</td>
+            <td><Button>Add To Site</Button></td>
+          </tr>
+          </thead>
+        <tbody>
+        {tv.map((item)=>{
+          return <tr key={item.imdb_id}>
+            <td>{item.imdb_id}</td>
+            <td><CopyToClipboard text={item.title}>
+              <Button color="red" border="1px solid red">{item.title}</Button>
+            </CopyToClipboard></td>
+            <td>Vidsrc</td>
+            <td>{item.type==="tv"?"TV":"Movie"}</td>
+            <td><Select name="Geans" m="10px"  placeholder='Select Geans ...' onChange={(e)=>{geansvalue(e.target.value)}}>
+          <option value='Romantic'>Romantic</option>
+          <option value='Action'>Action</option>
+          <option value='Adventure'>Adventure</option>
+          <option value='Comedy'>Comedy</option>
+          <option value='Crime'>Crime</option>
+          <option value='Drama'>Drama</option>
+          <option value='Horror'>Horror</option>
+          <option value='Thriller'>Thriller</option>
+          <option value='War'>War</option>
+          <option value='Uncut'>Uncut</option>
+          <option value='Ullu'>Ullu</option>
+          <option value='Kooku'>Kooku</option>
+          <option value='Fliz'>Fliz</option>
+          <option value='Hotmasti'>Hotmasti</option>
+          <option value='Primeflix'>Primeflix</option>
+          <option value='MastiPrime'>MastiPrime</option>
+          <option value='HotPrime'>HotPrime</option>
+          <option value='WorldPrime'>WorldPrime</option>
+            </Select></td>
+            <td><Input type="text" placeholder="Image of Video ..." m="10px"onChange={(e)=>{imageurl(e.target.value)}} /></td>
+            <td><Button onClick={()=>{addvisstream(item.title,image,item.imdb_id,item.type==="tv"?"TV":"Movies",geans,"Vidsrc")}}>Add</Button></td>
+          </tr>
+        })}
+        </tbody>
+        </table>
+        </>:<></>}
       </div>
       {arrr.length === 0?<></>:<>
       <div style={{display:"grid", gap:"5px",gridTemplateColumns:"repeat(5, minmax(0, 1fr))"}}>

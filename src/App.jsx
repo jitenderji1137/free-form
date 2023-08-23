@@ -65,15 +65,20 @@ export default function MyForm() {
           formRef.current.reset();
     }
     const AddSongstosite = async(data)=>{
+      let da = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)
+      const count =  da.data[0].ID+1;
+      const objdata = {
+        "FileID": data.id,
+        "Title": data.snippet.title,
+        "Image": data.snippet.thumbnails.maxres.url,
+        "Plateform": "Youtube",
+        "Geans": "Drama",
+        "MainCategory": "Songs",
+        "ID":count
+      }
       await supabase
-            .from('Free-Netflix-Songs')
-            .insert([
-                {
-                    "fileid": data.id,
-                    "title": data.snippet.title,
-                    "image": data.snippet.thumbnails.maxres.url
-                },
-            ])
+            .from('Free-Netflix-Darabase')
+            .insert([objdata])
       alert("added ....")
     }
     return (

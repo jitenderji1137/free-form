@@ -18,6 +18,23 @@ export default function MyForm() {
   const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
   const supabase = createClient(supabaseUrl, supabaseKey)
+  const uploadimage = async (url) => {
+    if (url !== null && url !== "") {
+      try {
+        const response = await axios.post("https://api.imgbb.com/1/upload", null, {
+          params: {
+            key: "48df0216f838c0a3e9c746f61718472c",
+            image: url,
+          },
+        });
+        const imss = response.data.data.image.url;
+        return imss;
+      } catch (error) {
+        console.error("Error:", error);
+        throw error;
+      }
+    }
+  };
   function getdata(){
       if(nextresulr){
           return;
@@ -53,8 +70,10 @@ export default function MyForm() {
     const handleSubmit = async (e) => {
       e.preventDefault();
       const form = e.target;
-      const formdata = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
-      const jsonData = `{"Title":"${form.Title.value}","Image":"${form.Image.value}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
+      const ImageURL = await uploadimage(form.Image.value);
+      console.log(ImageURL);
+      const formdata = `{"Title":"${form.Title.value}","Image":"${ImageURL}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
+      const jsonData = `{"Title":"${form.Title.value}","Image":"${ImageURL}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
       await axios.post(BaseURL, jsonData)
       .then(response => {
         alert("POST request successful!", response.data);
@@ -70,7 +89,7 @@ export default function MyForm() {
                 {
                     "FileID": form.FileID.value,
                     "Title": form.Title.value,
-                    "Image": form.Image.value,
+                    "Image": ImageURL,
                     "Plateform": form.Plateform.value,
                     "Geans": form.Geans.value,
                     "MainCategory": form.MainCategory.value,
@@ -100,10 +119,11 @@ export default function MyForm() {
     const addvisstream = async(tit,img,id,main,gein,pla)=>{
       let da = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)
       const count =  da.data[0].ID+1;
+      const ImageURL = await uploadimage(img);
       const objdata = {
         "FileID": id,
         "Title": tit,
-        "Image": img,
+        "Image": ImageURL,
         "Plateform": pla,
         "Geans": gein,
         "MainCategory": main,
@@ -158,7 +178,7 @@ export default function MyForm() {
           <option value='filelions'>filelions</option>
         </Select>
         <ButtonGroup style={{display:"flex",justifyContent:"space-between"}}>
-           <Link href = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie" isExternal><Button>Check</Button></Link>
+           <Link href = "#" onClick={()=>{uploadimage(prompt("Image Url to upload"))}}><Button>Upload Image</Button></Link>
            <Button type="submit">Add to Site ... </Button>
         </ButtonGroup>
       </form>

@@ -191,7 +191,7 @@ export default function MyForm() {
               <Button color="red" border="1px solid red">{item.title}</Button>
             </CopyToClipboard></td>
             <td>Vidsrc</td>
-            <td>{item.type==="tv"?"TV":"Movie"}</td>
+            <td>{cate}</td>
             <td><Select name="Geans" m="10px"  placeholder='Select Geans ...' onChange={(e)=>{geansvalue(e.target.value)}}>
           <option value='Romantic'>Romantic</option>
           <option value='Action'>Action</option>

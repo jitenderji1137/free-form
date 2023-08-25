@@ -12,6 +12,7 @@ export default function MyForm() {
   const [data,dataval] = useState("");
   const [image,imageurl] = useState("")
   const [geans,geansvalue] = useState("")
+  const [cate,category] = useState("")
   const [tv,tvvalue] = useState([])
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
   const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
@@ -38,13 +39,15 @@ export default function MyForm() {
       })
   }
     function loadmoviesdata(){
-      axios.get("https://vidsrc.to/vapi/movie/new/1").then((data)=>{
-        tvvalue(data.data.result.items);
+      category("Movies")
+      axios.get("https://vidsrc.me/movies/latest/page-1.json").then((data)=>{
+        tvvalue(data.data.result);
       })
     }
     function loadtvdata(){
-      axios.get("https://vidsrc.to/vapi/tv/new/1").then((data)=>{
-        tvvalue(data.data.result.items);
+      category("TV")
+      axios.get("https://vidsrc.me/tvshows/latest/page-1.json").then((data)=>{
+        tvvalue(data.data.result);
       })
     }
     const handleSubmit = async (e) => {
@@ -210,7 +213,7 @@ export default function MyForm() {
           <option value='WorldPrime'>WorldPrime</option>
             </Select></td>
             <td><Input type="text" placeholder="Image of Video ..." m="10px"onChange={(e)=>{imageurl(e.target.value)}} /></td>
-            <td><Button onClick={()=>{addvisstream(item.title,image,item.imdb_id,item.type==="tv"?"TV":"Movies",geans,"Vidsrc")}}>Add</Button></td>
+            <td><Button onClick={()=>{addvisstream(item.title,image,item.imdb_id,cate,geans,"vidsrc")}}>Add</Button></td>
           </tr>
         })}
         </tbody>

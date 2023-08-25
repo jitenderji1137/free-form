@@ -73,14 +73,6 @@ export default function MyForm() {
       const ImageURL = await uploadimage(form.Image.value);
       console.log(ImageURL);
       const formdata = `{"Title":"${form.Title.value}","Image":"${ImageURL}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"},`
-      const jsonData = `{"Title":"${form.Title.value}","Image":"${ImageURL}","MainCategory":"${form.MainCategory.value}","Geans":"${form.Geans.value}","FileID":"${form.FileID.value}","Plateform":"${form.Plateform.value}"}`
-      await axios.post(BaseURL, jsonData)
-      .then(response => {
-        alert("POST request successful!", response.data);
-      })
-      .catch(error => {
-        console.error("Error occurred during POST request:", error);
-      });
       let { data } = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)
       const count =  data[0].ID+1;
      await supabase
@@ -97,7 +89,7 @@ export default function MyForm() {
                 },
             ])
       dataval(formdata);
-          formRef.current.reset();
+      formRef.current.reset();
     }
     const AddSongstosite = async(data)=>{
       let da = await supabase.from('Free-Netflix-Darabase').select('ID').order('ID', { ascending: false }).range(0,0)

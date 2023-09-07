@@ -15,8 +15,8 @@ export default function MyForm() {
   const [cate,category] = useState("")
   const [tv,tvvalue] = useState([])
   const BaseURL = "https://ill-pink-crow-tutu.cyclic.app/Add-Movie";
-  const supabaseUrl = 'https://hskxgryorlvbbrqzpxnt.supabase.co'
-  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhza3hncnlvcmx2YmJycXpweG50Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTM5ODE3MDEsImV4cCI6MjAwOTU1NzcwMX0.KK6kMxszqn5Fx63xns2dftB-c2MeJUv5P5MZgLcOWdc";
+  const supabaseUrl = 'https://dcfuynjpxxdmsxwfacxq.supabase.co'
+  const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRjZnV5bmpweHhkbXN4d2ZhY3hxIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEzODQxNTUsImV4cCI6MjAwNjk2MDE1NX0.dhe2e-KtMcEkvEoJPn6SUNw_0vlKtI0NHxyxPfNEnJo";
   const supabase = createClient(supabaseUrl, supabaseKey)
   const uploadimage = async (url) => {
     if (url !== null && url !== "") {
